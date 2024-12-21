@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Splitter</title>
+  <style>
+    * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom, #4ae35c, #3aefad);
+      margin: 0;
+      padding: 0;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 20px 0;
+      font-size: 3rem;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+      width: 90%;
+      max-width: 500px;
+      backdrop-filter: blur(10px);
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.2);
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+    }
+
+    button {
+      background: #ff6b6b;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 15px 20px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    button:hover {
+      background: #ff5252;
+      transform: translateY(-2px);
+    }
+
+    .team-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+      width: 90%;
+      max-width: 500px;
+    }
+
+    .team {
+      flex: 1;
+      min-width: 150px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    .team h3 {
+      margin-top: 0;
+      font-size: 1.5rem;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+      color: #ffffff;
+    }
+
+    .team p {
+      font-size: 1.1rem;
+      margin: 10px 0 0;
+      white-space: pre-wrap;
+      color: #ffffff;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Team Splitter</h1>
+  <div class="container">
+    <p>Introdu numele jucatorilor separate prin virgule:</p>
+    <input id="playersInput" type="text" placeholder="e.g., baieti din cartierul Prime">
+    <button onclick="splitTeams()">Imparte in echipe</button>
+  </div>
+
+  <div class="team-container">
+    <div class="team" id="team1">
+      <h3>Echipa 1</h3>
+      <p>Niciun jucator momentan</p>
+    </div>
+    <div class="team" id="team2">
+      <h3>Echipa 2</h3>
+      <p>Niciun jucator momentan</p>
+    </div>
+  </div>
+
+  <script>
+    function splitTeams() {
+      const input = document.getElementById('playersInput').value;
+      const players = input.split(',').map(name => name.trim()).filter(name => name !== '');
+
+      if (players.length === 0) {
+        alert("Please enter some player names!");
+        return;
+      }
+
+      // Shuffle the players array
+      players.sort(() => Math.random() - 0.5);
+
+      // Split the array into two teams
+      const mid = Math.ceil(players.length / 2);
+      const team1 = players.slice(0, mid);
+      const team2 = players.slice(mid);
+
+      // Update the team containers
+      document.getElementById('team1').innerHTML = `
+        <h3>Echipa 1</h3>
+        <p>${team1.join('\n')}</p>
+      `;
+
+      document.getElementById('team2').innerHTML = `
+        <h3>Echipa 2</h3>
+        <p>${team2.join('\n')}</p>
+      `;
+    }
+  </script>
+</body>
+</html>
